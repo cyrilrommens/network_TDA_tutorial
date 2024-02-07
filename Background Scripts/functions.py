@@ -98,7 +98,7 @@ def inverse_matrix_generator(matrix):
     return result_matrix, removed_rows, inverse_matrix
 
 
-# Define function to decompress the compressed array with inserting zeros at the indices of the removed rows and columns
+# Define function to decompress the compressed array with inserting zeros at the indices of the removed rows
 def decompress_row(array_length, index_removed):
     
     # Add +1 to each value in the index_list since the count starts at zero
@@ -186,3 +186,24 @@ def functionals(G_matrices, L_matrices, L_p, temperature):
         F = free_energy(U, temperature, S)
         F_list.append(F)
     return U_list, S_list, F_list
+
+
+# flatten a 2D list of sets to a 1D list of sets
+def flatten_list(input_list):
+    input_list = [item for sublist in input_list for item in sublist]
+    input_list = sorted(input_list, key=lambda x: (len(x), x))
+
+    # Remove duplicates
+    input_list = list(set(tuple(sorted(s)) for s in input_list))
+
+    # Sort by set size and within each set size by values
+    input_list = sorted(input_list, key=lambda x: (len(x), x))
+
+    # Convert back to sets
+    result_list = [set(s) for s in input_list]
+    return result_list
+
+
+# Returns a list of sets that are in A but not in B
+def sets_difference(A, B):
+    return [set_a for set_a in A if set_a not in B]
